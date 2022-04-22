@@ -1,6 +1,7 @@
 
 import { useEffect } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
+import { TTS } from 'services/TTS';
 import { io } from "socket.io-client";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
 
   useEffect(() => {
     socket.emit('CHAT_MESSAGE', finalTranscript)
+    TTS(finalTranscript)
   }, [finalTranscript])
 
 
