@@ -5,6 +5,8 @@ const app = express()
 
 const server = app.listen(5000)
 
+app.use(express.static(path.resolve(__dirname, '../views/build')));
 
-app.get('/', (req, res) => {
-})
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../views/build', 'index.html'));
+});
