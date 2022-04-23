@@ -12,8 +12,13 @@ export default function UserMessage({ message, key }: { message: Message, key: n
       borderRadius={"15px 15px 0 15px"}
       padding="10px"
       key={key}
+      display="flex"
+      alignItems="center"
+      justifyContent={'flex-start'}
     >
-      <Avatar name={message.user} src='https://bit.ly/kent-c-dodds' />
+      <Box marginX="15px">
+        <Avatar name={message.user} src='https://bit.ly/kent-c-dodds' />
+      </Box>
       {message.message}
     </Box>
   )

@@ -11,9 +11,14 @@ export default function OuterMessage({ message, key }: { message: Message, key: 
       borderRadius={"15px 15px 15px 0"}
       padding="10px"
       key={key}
+      display="flex"
+      alignItems="center"
+      justifyContent={'flex-start'}
     >
-      <Avatar name={message.user} src='https://bit.ly/dan-abramov' />
       {message.message}
+      <Box marginX="15px">
+        <Avatar name={message.user} src='https://bit.ly/dan-abramov' />
+      </Box>
     </Box>
   )
 }
