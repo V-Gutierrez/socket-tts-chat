@@ -1,17 +1,18 @@
+import { debounce } from 'lodash'
 import { useEffect, useState } from 'react'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
+import { TTS } from 'services/TTS'
 import socketClient from "socket.io-client"
-import { debounce } from "lodash"
 
 const socket = socketClient()
 
 function App() {
   const {
     listening,
-    finalTranscript
+    finalTranscript,
+    transcript
   } = useSpeechRecognition()
   const [messages, setMessages] = useState<{ message: string, user: string }[]>([])
-
 
   useEffect(() => {
     socket.once("connect", () => {
@@ -19,21 +20,38 @@ function App() {
     })
   }, [])
 
-  useEffect(() => {
-    socket.once("BROADCAST", (receivedMessage) => {
-      debounce(() => setMessages(prev => [...prev, receivedMessage]), 2500)()
-    })
+  socket.once("BROADCAST", (receivedMessage) => {
+    const cleanedMessages = new Set([...messages, receivedMessage])
+    setMessages(Array.from(cleanedMessages))
+  })
 
+  useEffect(() => {
+    if (messages.length > 0 && messages[messages.length - 1].user !== "You") {
+      TTS("Message received! Last message was: " + messages[messages.length - 1].message)
+    }
+  }, [messages])
+
+
+  useEffect(() => {
     if (finalTranscript && !listening) {
       socket.emit('SEND_MESSAGE', finalTranscript)
+      setMessages(prev => [...prev, ...[{ message: finalTranscript, user: "You" }]])
+      TTS("Message sent!")
     }
   }, [listening])
 
+  const handleStop = () => {
+    SpeechRecognition.stopListening()
+    socket.emit('SEND_MESSAGE', transcript)
+    TTS("Message sent!")
+  }
+
   return (
     <div>
-      {listening ? <div>Listening...</div> : <div>Say something!</div>}
-      <button onClick={() => SpeechRecognition.startListening()}>Start</button>
-      <button onClick={() => SpeechRecognition.stopListening()}>Stop</button>
+      {listening ? <div>Listening...</div> : <div>Say something to the other side!</div>}
+
+      <button disabled={listening} onClick={() => SpeechRecognition.startListening()}>Start</button>
+      <button disabled={!listening} onClick={handleStop}>Stop</button>
 
       {messages.map((message, index) => {
         return <li key={index}>{message.message} - {message.user}</li>

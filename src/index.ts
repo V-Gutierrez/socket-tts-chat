@@ -16,7 +16,7 @@ io.on("connection", (socket: Socket) => {
   socket.removeAllListeners()
 
   socket.on("SEND_MESSAGE", (message: string) => {
-    console.log("🚀", message)
+    console.log({ message, user: socket.id })
     socket.broadcast.emit("BROADCAST", { message, user: socket.id })
   })
 });
