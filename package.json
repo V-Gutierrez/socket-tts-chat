@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --fix",
     "dev": "nodemon ./src/index.ts",
-    "build:front": "cd views && npm install && npm run build"
+    "build:front": "cd views && npm install && npm run build",
+    "start": "node src/index.js"
   },
   "keywords": [],
   "author": "",
