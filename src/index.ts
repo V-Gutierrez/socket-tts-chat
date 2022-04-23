@@ -17,8 +17,9 @@ io.on("connection", (socket: Socket) => {
 
   socket.removeAllListeners()
   socket.emit("ONLINE_USERS", connections)
-  socket.on("SEND_MESSAGE", (message: string) => {
-    socket.broadcast.emit("BROADCAST", { message, user: socket.id })
+  socket.on("SEND_MESSAGE", ({ message, user }) => {
+    console.log("🚀 ~ file: index.ts ~ line 21 ~ socket.on ~ username", user)
+    socket.broadcast.emit("BROADCAST", { message, user: user })
   })
 });
 

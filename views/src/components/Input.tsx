@@ -13,7 +13,7 @@ export default function Input() {
 
   useEffect(() => {
     if (finalTranscript && !listening) {
-      Socket.emit('SEND_MESSAGE', finalTranscript)
+      Socket.emit('SEND_MESSAGE', { message: finalTranscript, user: username as string })
       setMessages(prev => [...prev, ...[{ message: finalTranscript, user: username as string }]])
       setTextMessage('')
     }
@@ -22,7 +22,7 @@ export default function Input() {
 
   const handleStop = () => {
     SpeechRecognition.stopListening()
-    Socket.emit('SEND_MESSAGE', transcript)
+    Socket.emit('SEND_MESSAGE', { message: transcript, user: username as string })
   }
 
   const handleStart = () => {
@@ -35,7 +35,7 @@ export default function Input() {
 
   const handleSending = () => {
     if (textMessage.length > 0) {
-      Socket.emit('SEND_MESSAGE', textMessage)
+      Socket.emit('SEND_MESSAGE', { message: textMessage, user: username as string })
       setMessages(prev => [...prev, ...[{ message: textMessage, user: username as string }]])
       setTextMessage('')
     }

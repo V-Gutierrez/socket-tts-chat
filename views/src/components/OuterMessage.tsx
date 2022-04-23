@@ -1,4 +1,4 @@
-import { Avatar, AvatarBadge, Box, Flex } from '@chakra-ui/react'
+import { Avatar, AvatarBadge, Box, Flex, Tooltip } from '@chakra-ui/react'
 import { Message } from 'context/SocketContext'
 
 export default function OuterMessage({ message }: { message: Message }) {
@@ -7,11 +7,13 @@ export default function OuterMessage({ message }: { message: Message }) {
       w="full"
       marginY="5px"
     >
-      <Box marginX="5px">
-        <Avatar name={message.user} >
-          <AvatarBadge boxSize='1.25em' bg='green.500' />
-        </Avatar>
-      </Box>
+      <Tooltip label={message.user}>
+        <Box marginX="5px">
+          <Avatar name={message.user} >
+            <AvatarBadge boxSize='1.25em' bg='green.500' />
+          </Avatar>
+        </Box>
+      </Tooltip>
       <Box
         bg="gray"
         wordBreak={"break-word"}
