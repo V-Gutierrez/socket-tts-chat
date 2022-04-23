@@ -1,1 +1,0 @@
-web: cd ./views && npm run build
