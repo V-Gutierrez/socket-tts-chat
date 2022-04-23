@@ -13,6 +13,7 @@ interface SocketContextValue {
   messages: Message[]
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>
   Socket: Socket
+  usersOnline: number
 }
 
 interface ProviderProps {
@@ -23,6 +24,7 @@ const socket = socketClient()
 
 export function SocketProvider({ children }: ProviderProps) {
   const [messages, setMessages] = useState<Message[]>([])
+  const [usersOnline, setUsersOnline] = useState<number>(0)
 
 
   useEffect(() => {
@@ -30,10 +32,17 @@ export function SocketProvider({ children }: ProviderProps) {
       TTS("Connected to server")
       /* Add entered chat message */
     })
+
+   /*  socket.once("ONLINE_USERS", (usersAmount: number) => {
+      TTS(`${usersAmount} users online`)
+      setUsersOnline(usersAmount)
+    }) */
   }, [])
 
+
+
   return (
-    <SocketContext.Provider value={{ messages, setMessages, Socket: socket }}>
+    <SocketContext.Provider value={{ messages, setMessages, Socket: socket, usersOnline }}>
       {children}
     </SocketContext.Provider>
   )

@@ -16,8 +16,11 @@ io.on("connection", (socket: Socket) => {
   socket.removeAllListeners()
 
   socket.on("SEND_MESSAGE", (message: string) => {
-    console.log({ message, user: socket.id })
     socket.broadcast.emit("BROADCAST", { message, user: socket.id })
+  })
+
+  socket.on("ONLINE_USERS", () => {
+    socket.emit("ONLINE_USERS", Object.keys(io.sockets.sockets))
   })
 });
 
