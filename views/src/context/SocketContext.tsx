@@ -34,7 +34,6 @@ export function SocketProvider({ children }: ProviderProps) {
   }, [])
 
   socket.once("ONLINE_USERS", (usersAmount: number) => {
-    usersAmount > 1 ? TTS(`${usersAmount} users online`) : TTS(`${usersAmount} user online`)
     setUsersOnline(usersAmount)
   })
 

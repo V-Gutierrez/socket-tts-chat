@@ -8,7 +8,7 @@ const server = app.listen(5000)
 
 const io = new Server(server, {
   cors: {
-    origin: ['http://localhost:5000', '192.168.0.56:5000', 'http://localhost:3000'],
+    origin: ['http://localhost:5000', '192.168.0.56:5000', 'localhost:3000'],
   }
 });
 

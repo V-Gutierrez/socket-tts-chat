@@ -1,5 +1,6 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { SocketProvider } from 'context/SocketContext';
+import { UserProvider } from 'context/UserContext';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './pages/App';
@@ -8,11 +9,14 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <SocketProvider>
       <ChakraProvider>
-        <App />
+        <UserProvider>
+          <App />
+        </UserProvider>
       </ChakraProvider>
     </SocketProvider>
   </React.StrictMode>

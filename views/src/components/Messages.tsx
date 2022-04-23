@@ -2,10 +2,12 @@ import { Badge, Box } from '@chakra-ui/react';
 import OuterMessage from 'components/OuterMessage';
 import UserMessage from 'components/UserMessage';
 import { useSocketContext } from 'context/SocketContext';
+import { useUserContext } from 'context/UserContext';
 import React from 'react';
 
 const Messages: React.FC = () => {
   const { messages, usersOnline } = useSocketContext()
+  const { username } = useUserContext()
 
   return (
     <>
@@ -36,7 +38,7 @@ const Messages: React.FC = () => {
         }}
       >
         {messages.map((message, index) => {
-          if (message.user === "You") {
+          if (message.user === username) {
             return <UserMessage message={message} key={index} />
           } else {
             return <OuterMessage message={message} key={index} />

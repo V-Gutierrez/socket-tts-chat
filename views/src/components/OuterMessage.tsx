@@ -1,7 +1,7 @@
 import { Avatar, AvatarBadge, Box, Flex } from '@chakra-ui/react'
 import { Message } from 'context/SocketContext'
 
-export default function OuterMessage({ message, key }: { message: Message, key: number }) {
+export default function OuterMessage({ message }: { message: Message }) {
   return (
     <Flex
       w="full"
@@ -18,7 +18,6 @@ export default function OuterMessage({ message, key }: { message: Message, key: 
         color="white"
         marginY="5px"
         borderRadius={"25px 25px 35px 0"}
-        key={key}
         paddingX="20px"
         display="flex"
         alignItems="center"

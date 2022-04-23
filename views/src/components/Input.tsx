@@ -1,5 +1,6 @@
 import { Flex, Button, InputGroup, FormControl, Input as FormInput, Spinner } from '@chakra-ui/react'
 import { useSocketContext } from 'context/SocketContext'
+import { useUserContext } from 'context/UserContext'
 import React, { useEffect, useState } from 'react'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 
@@ -7,21 +8,17 @@ export default function Input() {
   const { listening, finalTranscript, transcript } = useSpeechRecognition()
   const { messages, setMessages, Socket } = useSocketContext()
   const [textMessage, setTextMessage] = useState('')
+  const { username } = useUserContext()
 
 
   useEffect(() => {
     if (finalTranscript && !listening) {
       Socket.emit('SEND_MESSAGE', finalTranscript)
-      setMessages(prev => [...prev, ...[{ message: finalTranscript, user: "You" }]])
+      setMessages(prev => [...prev, ...[{ message: finalTranscript, user: username as string }]])
       setTextMessage('')
     }
     // eslint-disable-next-line
   }, [listening])
-
-  useEffect(() => {
-    if (messages.length > 0 && messages[messages.length - 1].user !== "You") {
-    }
-  }, [messages])
 
   const handleStop = () => {
     SpeechRecognition.stopListening()
@@ -39,7 +36,7 @@ export default function Input() {
   const handleSending = () => {
     if (textMessage.length > 0) {
       Socket.emit('SEND_MESSAGE', textMessage)
-      setMessages(prev => [...prev, ...[{ message: textMessage, user: "You" }]])
+      setMessages(prev => [...prev, ...[{ message: textMessage, user: username as string }]])
       setTextMessage('')
     }
   }

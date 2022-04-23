@@ -1,7 +1,11 @@
 import { Avatar, AvatarBadge, Box, Flex } from '@chakra-ui/react'
 import { Message } from 'context/SocketContext'
+import { Tooltip } from '@chakra-ui/react'
+import { useUserContext } from 'context/UserContext'
 
-export default function UserMessage({ message, key }: { message: Message, key: number }) {
+export default function UserMessage({ message }: { message: Message }) {
+  const { username } = useUserContext()
+
   return (
     <Flex
       marginY="5px"
@@ -17,18 +21,19 @@ export default function UserMessage({ message, key }: { message: Message, key: n
         wordBreak={"break-word"}
         paddingX="15px"
         paddingY="5px"
-        key={key}
         display="flex"
         alignItems="center"
         justifyContent={'flex-start'}
       >
         {message.message}
       </Box>
-      <Box marginX="5px">
-        <Avatar name={message.user} >
-          <AvatarBadge boxSize='1.25em' bg='green.500' />
-        </Avatar>
-      </Box>
+      <Tooltip label={username}>
+        <Box marginX="5px" cursor="pointer">
+          <Avatar name={message.user} >
+            <AvatarBadge boxSize='1.25em' bg='green.500' />
+          </Avatar>
+        </Box>
+      </Tooltip>
     </Flex>
   )
 }
