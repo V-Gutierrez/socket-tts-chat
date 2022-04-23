@@ -13,10 +13,10 @@ interface ProviderProps {
 }
 
 export function UserProvider({ children }: ProviderProps) {
-  const [username, setUsername] = useState<string | null>(localStorage.getItem('username'))
+  const [username, setUsername] = useState<string | null>(sessionStorage.getItem('username'))
 
   const storeUserName = () => {
-    username && localStorage.setItem('username', username)
+    username && sessionStorage.setItem('username', username)
   }
 
   return (
