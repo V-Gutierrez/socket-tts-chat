@@ -6,7 +6,7 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 
 export default function Input() {
   const { listening, finalTranscript, transcript } = useSpeechRecognition()
-  const { messages, setMessages, Socket } = useSocketContext()
+  const { setMessages, Socket } = useSocketContext()
   const [textMessage, setTextMessage] = useState('')
   const { username } = useUserContext()
 
