@@ -1,35 +1,45 @@
-
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
-import { TTS } from 'services/TTS';
-import { io } from "socket.io-client";
+import socketClient from "socket.io-client"
+import { debounce } from "lodash"
+
+const socket = socketClient()
 
 function App() {
   const {
-    transcript,
     listening,
-    resetTranscript,
     finalTranscript
-  } = useSpeechRecognition();
+  } = useSpeechRecognition()
+  const [messages, setMessages] = useState<{ message: string, user: string }[]>([])
 
-  const socket = io();
 
   useEffect(() => {
-    socket.emit('CHAT_MESSAGE', finalTranscript)
-    TTS(finalTranscript)
-  }, [finalTranscript])
+    socket.once("connect", () => {
+      console.log("Connected to server")
+    })
+  }, [])
 
+  useEffect(() => {
+    socket.once("BROADCAST", (receivedMessage) => {
+      debounce(() => setMessages(prev => [...prev, receivedMessage]), 2500)()
+    })
+
+    if (finalTranscript && !listening) {
+      socket.emit('SEND_MESSAGE', finalTranscript)
+    }
+  }, [listening])
 
   return (
     <div>
-      <p>Microphone: {listening ? 'on' : 'off'}</p>
+      {listening ? <div>Listening...</div> : <div>Say something!</div>}
       <button onClick={() => SpeechRecognition.startListening()}>Start</button>
       <button onClick={() => SpeechRecognition.stopListening()}>Stop</button>
-      <button onClick={resetTranscript}>Reset</button>
-      <p>{transcript}</p>
-      <p>{finalTranscript}</p>
+
+      {messages.map((message, index) => {
+        return <li key={index}>{message.message} - {message.user}</li>
+      })}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
