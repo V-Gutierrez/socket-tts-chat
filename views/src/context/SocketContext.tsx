@@ -30,16 +30,18 @@ export function SocketProvider({ children }: ProviderProps) {
   useEffect(() => {
     socket.once("connect", () => {
       TTS("Connected to server")
-      /* Add entered chat message */
     })
-
-   /*  socket.once("ONLINE_USERS", (usersAmount: number) => {
-      TTS(`${usersAmount} users online`)
-      setUsersOnline(usersAmount)
-    }) */
   }, [])
 
+  socket.once("ONLINE_USERS", (usersAmount: number) => {
+    usersAmount > 1 ? TTS(`${usersAmount} users online`) : TTS(`${usersAmount} user online`)
+    setUsersOnline(usersAmount)
+  })
 
+  socket.once("BROADCAST", (receivedMessage) => {
+    const cleanedMessages = new Set([...messages, receivedMessage])
+    setMessages(Array.from(cleanedMessages))
+  })
 
   return (
     <SocketContext.Provider value={{ messages, setMessages, Socket: socket, usersOnline }}>

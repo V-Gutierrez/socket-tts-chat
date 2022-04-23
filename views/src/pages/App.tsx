@@ -6,6 +6,7 @@ function App() {
   return (
     <Flex w="full" h="980px" flexDir="row" color="white">
       <Flex w="100%" bg="black" h="100%" flexDir="column" alignItems={"center"} justifyContent="center">
+        <h1>TTS Chat</h1>
         <Messages />
         <Input />
       </Flex >

@@ -13,14 +13,12 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket: Socket) => {
-  socket.removeAllListeners()
+  const connections = Array.from(io.sockets.sockets).map(socket => socket[0]).length
 
+  socket.removeAllListeners()
+  socket.emit("ONLINE_USERS", connections)
   socket.on("SEND_MESSAGE", (message: string) => {
     socket.broadcast.emit("BROADCAST", { message, user: socket.id })
-  })
-
-  socket.on("ONLINE_USERS", () => {
-    socket.emit("ONLINE_USERS", Object.keys(io.sockets.sockets))
   })
 });
 

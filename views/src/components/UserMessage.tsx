@@ -1,26 +1,34 @@
-import { Avatar, Box } from '@chakra-ui/react'
+import { Avatar, AvatarBadge, Box, Flex } from '@chakra-ui/react'
 import { Message } from 'context/SocketContext'
 
 export default function UserMessage({ message, key }: { message: Message, key: number }) {
   return (
-    <Box
-      bg="black"
-      marginLeft="50%"
-      minW="200px"
-      maxW="45%"
-      color="white"
+    <Flex
       marginY="5px"
-      borderRadius={"35px 35px 0 35px"}
-      padding="10px"
-      key={key}
-      display="flex"
+      w="full"
       alignItems="center"
-      justifyContent={'flex-start'}
+      justifyContent={"flex-end"}
     >
-      <Box marginX="15px">
-        <Avatar name={message.user} src='https://bit.ly/kent-c-dodds' />
+      <Box
+        bg="black"
+        minW="200px"
+        color="white"
+        borderRadius={"35px 25px 0 25px"}
+        wordBreak={"break-word"}
+        paddingX="15px"
+        paddingY="5px"
+        key={key}
+        display="flex"
+        alignItems="center"
+        justifyContent={'flex-start'}
+      >
+        {message.message}
       </Box>
-      {message.message}
-    </Box>
+      <Box marginX="5px">
+        <Avatar name={message.user} >
+          <AvatarBadge boxSize='1.25em' bg='green.500' />
+        </Avatar>
+      </Box>
+    </Flex>
   )
 }

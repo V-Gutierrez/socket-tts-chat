@@ -11,14 +11,15 @@ const Messages: React.FC = () => {
     <>
       <Badge colorScheme='green'>{usersOnline} Online Users</Badge>
       <Box
-        w="60%"
+        w={["95%", "50%"]}
         minW="380px"
         h="55%"
         bg="bisque"
+        overflowX="clip"
         borderRadius={"20px"}
         marginY="20px"
         overflowY={"scroll"}
-        padding="10px"
+        paddingX="10px"
         display={"flex"}
         flexDirection="column"
         css={{
