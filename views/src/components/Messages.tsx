@@ -1,9 +1,9 @@
+import React from 'react';
 import { Badge, Box } from '@chakra-ui/react';
 import OuterMessage from 'components/OuterMessage';
 import UserMessage from 'components/UserMessage';
 import { useSocketContext } from 'context/SocketContext';
 import { useUserContext } from 'context/UserContext';
-import React from 'react';
 
 const Messages: React.FC = () => {
   const { messages, usersOnline } = useSocketContext()
