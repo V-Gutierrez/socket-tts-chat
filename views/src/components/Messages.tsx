@@ -12,10 +12,8 @@ const Messages: React.FC = () => {
 
   useEffect(() => {
     //@ts-ignore
-    messageBox?.current?.scroll({ top: messageBox?.current?.clientHeight * 2 })
+    messageBox?.current?.scrollTo(0, messageBox?.current?.scrollHeight)
   }, [messages])
-
-
 
   return (
     <>
