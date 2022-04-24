@@ -48,7 +48,7 @@ export default function Input() {
   }
 
   return (
-    <Flex w={"50%"} flexDir={["column", "column", "column", "column", "row"]}>
+    <Flex w={["90%", "50%"]} flexDir={["column", "column", "column", "column", "row"]}>
       <FormControl isRequired>
         <InputGroup>
           <FormInput value={textMessage} placeholder={listening ? transcript ? transcript : 'Listening...' : "Say or type something"} onChange={handleTextChange} onKeyDown={handleEnter} />

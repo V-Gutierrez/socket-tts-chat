@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { TTS } from 'services/TTS';
 import socketClient, { Socket } from "socket.io-client"
 
+
 const SocketContext = createContext<SocketContextValue>({} as SocketContextValue)
 
 export interface Message {
@@ -33,7 +34,7 @@ export function SocketProvider({ children }: ProviderProps) {
     })
   }, [])
 
-  socket.once("ONLINE_USERS", (usersAmount: number) => {
+  socket.on("ONLINE_USERS", (usersAmount: number) => {
     setUsersOnline(usersAmount)
   })
 

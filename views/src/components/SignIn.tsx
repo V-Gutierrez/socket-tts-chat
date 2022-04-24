@@ -11,15 +11,18 @@ import {
   Input,
 } from '@chakra-ui/react'
 import { useState } from 'react'
+import { useSocketContext } from 'context/SocketContext'
 
 export default function SignIn() {
   const { setUsername, username, storeUserName } = useUserContext()
+  const { Socket } = useSocketContext()
   const [isModalVisible, setIsModalVisible] = useState(username === null)
 
   const handleClose = () => {
     if (username) {
       setIsModalVisible(false)
       storeUserName()
+      Socket.emit("SEND_MESSAGE", { message: `${username} has joined the chat`, user: username, signin: true })
     }
   }
 

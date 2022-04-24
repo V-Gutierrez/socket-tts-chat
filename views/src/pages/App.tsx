@@ -5,8 +5,8 @@ import SignIn from 'components/SignIn'
 
 function App() {
   return (
-    <Flex w="full" h="980px" flexDir="row" color="white">
-      <Flex w="100%" bg="black" h="100%" flexDir="column" alignItems={"center"} justifyContent="center">
+    <Flex w="full" h={["90vh", "900px"]} flexDir="row" color="white">
+      <Flex w="100%" bg="black" h="100%" flexDir="column" alignItems={"center"} justifyContent="flex-start" paddingTop={["15px", "50px"]}>
         <Text fontSize={["16px", "32px"]} mb="35px">TTS Chat</Text>
         <SignIn />
         <Messages />
