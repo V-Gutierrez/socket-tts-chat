@@ -18,11 +18,11 @@ io.on("connection", (socket) => {
   socket.removeAllListeners()
   socket.emit("ONLINE_USERS", connections)
 
-  socket.on("SEND_MESSAGE", ({ message, user, signin }) => {
+  socket.on("SEND_MESSAGE", ({ message, user, signin, createdAt }) => {
     if (signin) {
-      socket.emit("BROADCAST", { message, user })
+      socket.emit("BROADCAST", { message, user, createdAt })
     }
-    socket.broadcast.emit("BROADCAST", { message, user: user })
+    socket.broadcast.emit("BROADCAST", { message, user: user, createdAt })
   })
 })
 

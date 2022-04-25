@@ -8,6 +8,7 @@ const SocketContext = createContext<SocketContextValue>({} as SocketContextValue
 export interface Message {
   message: string
   user: string
+  createdAt: string
 }
 
 interface SocketContextValue {

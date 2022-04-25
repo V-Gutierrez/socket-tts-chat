@@ -3,6 +3,7 @@ import { useSocketContext } from 'context/SocketContext'
 import { useUserContext } from 'context/UserContext'
 import React, { useEffect, useState } from 'react'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
+import { timestamp } from 'utils/time'
 
 export default function Input() {
   const { listening, finalTranscript, transcript } = useSpeechRecognition()
@@ -13,8 +14,8 @@ export default function Input() {
 
   useEffect(() => {
     if (finalTranscript && !listening) {
-      Socket.emit('SEND_MESSAGE', { message: finalTranscript, user: username as string })
-      setMessages(prev => [...prev, ...[{ message: finalTranscript, user: username as string }]])
+      Socket.emit('SEND_MESSAGE', { message: finalTranscript, user: username as string, createdAt: timestamp() })
+      setMessages(prev => [...prev, ...[{ message: finalTranscript, user: username as string, createdAt: timestamp() }]])
       setTextMessage('')
     }
     // eslint-disable-next-line
@@ -22,7 +23,7 @@ export default function Input() {
 
   const handleStop = () => {
     SpeechRecognition.stopListening()
-    Socket.emit('SEND_MESSAGE', { message: transcript, user: username as string })
+    Socket.emit('SEND_MESSAGE', { message: transcript, user: username as string, createdAt: timestamp() })
   }
 
   const handleStart = () => {
@@ -35,8 +36,8 @@ export default function Input() {
 
   const handleSending = () => {
     if (textMessage.length > 0) {
-      Socket.emit('SEND_MESSAGE', { message: textMessage, user: username as string })
-      setMessages(prev => [...prev, ...[{ message: textMessage, user: username as string }]])
+      Socket.emit('SEND_MESSAGE', { message: textMessage, user: username as string, createdAt: timestamp() })
+      setMessages(prev => [...prev, ...[{ message: textMessage, user: username as string, createdAt: timestamp() }]])
       setTextMessage('')
     }
   }

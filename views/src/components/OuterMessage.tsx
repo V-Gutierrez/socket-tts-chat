@@ -1,4 +1,4 @@
-import { Avatar, AvatarBadge, Box, Flex, Tooltip } from '@chakra-ui/react'
+import { Avatar, AvatarBadge, Box, Flex, Tooltip, Text } from '@chakra-ui/react'
 import { Message } from 'context/SocketContext'
 
 export default function OuterMessage({ message }: { message: Message }) {
@@ -19,12 +19,23 @@ export default function OuterMessage({ message }: { message: Message }) {
         wordBreak={"break-word"}
         color="white"
         marginY="5px"
-        borderRadius={"25px 25px 35px 0"}
+        borderRadius={"15px 15px 5px 0"}
         paddingX="20px"
+        paddingY="10px"
+        pb="15px"
         display="flex"
         alignItems="center"
         justifyContent={'flex-start'}
+        position="relative"
       >
+        <Text
+          color="white"
+          pos={"absolute"}
+          right="10px"
+          bottom="1.5%"
+          fontSize={["10px"]}
+        >{message.createdAt}
+        </Text>
         {message.message}
       </Box>
     </Flex >
