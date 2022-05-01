@@ -11,6 +11,21 @@ const Messages: React.FC = () => {
   const messageBox = useRef(null)
 
   useEffect(() => {
+    if (Notification.permission === 'denied' || Notification.permission === 'default') {
+      Notification.requestPermission()
+    } else {
+      const lastSentMessage = messages[messages.length - 1]
+
+      if (lastSentMessage.user !== username) {
+        new Notification('TTS Chat ~' + lastSentMessage.user, {
+          body: lastSentMessage.message,
+          vibrate: [200, 100, 200],
+          icon: '/logo192.png'
+        })
+      }
+    }
+
+
     //@ts-ignore
     messageBox?.current?.scrollTo(0, messageBox?.current?.scrollHeight)
   }, [messages])
